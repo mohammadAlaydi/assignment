@@ -1,14 +1,14 @@
 const AppState = {
     tasks: [],
     habits: [],
-    resources: [], // Metadata for resources
-    favorites: [], // IDs of favorite resources
+    resources: [], // metadata for resources
+    favorites: [], // ids of favorite resources
     settings: {
         theme: 'light'
     },
 
     init() {
-        // Load from LS or use defaults
+        // load data or use defaults
         this.tasks = Storage.get('tasks', []);
         this.habits = Storage.get('habits', []);
         this.favorites = Storage.get('favorites', []);
@@ -28,7 +28,7 @@ const AppState = {
             this.resources = await res.json();
             return this.resources;
         } catch (e) {
-            console.error('Failed to load resources', e);
+            console.error('failed to load resources', e);
             return [];
         }
     },
@@ -42,7 +42,7 @@ const AppState = {
         this.save();
     },
 
-    // Task methods
+    // task methods
     addTask(task) {
         task.id = Date.now();
         task.completed = false;
@@ -59,16 +59,17 @@ const AppState = {
     },
 
     deleteTask(id) {
+        // confirmation is handled in ui or app before calling this
         if (confirm('Are you sure you want to delete this task?')) {
             this.tasks = this.tasks.filter(t => t.id != id);
             this.save();
         }
     },
 
-    // Habit methods
+    // habit methods
     addHabit(habit) {
         habit.id = Date.now();
-        // Initialize progress for 7 days (0-6)
+        // init progress for 7 days
         habit.progress = Array(7).fill(false);
         this.habits.push(habit);
         this.save();
@@ -94,7 +95,7 @@ const AppState = {
         const completed = this.tasks.filter(t => t.completed).length;
         const progress = total === 0 ? 0 : Math.round((completed / total) * 100);
 
-        // Simple habit streak: Count total "true" in all habit progress arrays
+        // simple habit streak: count total "true" in all habit progress arrays
         let weeklyHabits = 0;
         this.habits.forEach(h => {
             if (h.progress && Array.isArray(h.progress)) {
@@ -115,11 +116,11 @@ const AppState = {
         today.setHours(0, 0, 0, 0);
 
         const limit = new Date(today);
-        limit.setDate(limit.getDate() + 2); // Today + 2 days
+        limit.setDate(limit.getDate() + 2); // today + 2 days
 
         return this.tasks.filter(t => {
             if (t.completed) return false;
-            // Handle string dates (input type="date" is YYYY-MM-DD)
+            // handle string dates (input type="date" is YYYY-MM-DD)
             const d = new Date(t.dueDate);
             d.setHours(0, 0, 0, 0);
             return d >= today && d <= limit;

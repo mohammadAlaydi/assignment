@@ -1,25 +1,25 @@
 const Storage = {
-  // Get parsed data or default
-  get(key, initial) {
-    try {
-      const item = localStorage.getItem(key);
-      return item ? JSON.parse(item) : initial;
-    } catch (e) {
-      console.error('Storage read error', e);
-      return initial;
-    }
-  },
+    // get stuff from local storage or return default
+    get(key, initial) {
+        try {
+            const item = localStorage.getItem(key);
+            return item ? JSON.parse(item) : initial;
+        } catch (e) {
+            console.error('storage read error', e);
+            return initial;
+        }
+    },
 
-  // Save data
-  set(key, value) {
-    try {
-      localStorage.setItem(key, JSON.stringify(value));
-    } catch (e) {
-      console.error('Storage write error', e);
-    }
-  },
+    // save data to local storage
+    set(key, value) {
+        try {
+            localStorage.setItem(key, JSON.stringify(value));
+        } catch (e) {
+            console.error('storage write error', e);
+        }
+    },
 
-  clear() {
-    localStorage.clear();
-  }
+    clear() {
+        localStorage.clear();
+    }
 };

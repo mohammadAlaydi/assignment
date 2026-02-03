@@ -1,17 +1,17 @@
 const UI = {
-    // Render functions will go here
+    // render logic goes here
 
     applyTheme(theme) {
         document.body.className = theme === 'dark' ? 'dark-mode' : '';
     },
 
     switchTab(tabId) {
-        // Active nav state
+        // highlight active nav button
         document.querySelectorAll('.nav-btn').forEach(btn => {
             btn.classList.toggle('active', btn.dataset.target === tabId);
         });
 
-        // Active section visibility
+        // hide or show sections
         document.querySelectorAll('section').forEach(sec => {
             sec.classList.toggle('hidden', sec.id !== tabId);
         });
@@ -54,7 +54,7 @@ const UI = {
 
         if (data.length === 0) list.innerHTML = '<p class="empty-state">No resources found.</p>';
 
-        // Populate filter if needed
+        // populate filter if needed
         const categories = [...new Set(AppState.resources.map(r => r.category))];
         const resFilter = document.getElementById('resource-filter');
         if (resFilter && resFilter.children.length <= 1) {
@@ -72,8 +72,8 @@ const UI = {
         if (!list) return;
 
         const habits = AppState.habits;
-        const days = ['S', 'M', 'T', 'W', 'T', 'F', 'S']; // Sat-Fri or Sun-Sat? Prompt says Sat-Fri.
-        // Let's assume Sat=0, Fri=6 for the array indices to match Prompt: "7 days (Sat–Fri)"
+        // days from saturday to friday as requested
+        const days = ['Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
 
         list.innerHTML = habits.map(habit => {
             const completedDays = habit.progress.filter(Boolean).length;
@@ -108,14 +108,14 @@ const UI = {
         const list = document.getElementById('task-list');
         if (!list) return;
 
-        // Defaults
+        // defaults
         const statusFilter = filters.status || document.getElementById('filter-status').value || 'all';
         const catFilter = filters.category || document.getElementById('filter-category').value || 'all';
         const sortBy = filters.sort || document.getElementById('sort-by').value || 'date';
 
         let tasks = [...AppState.tasks];
 
-        // Filter
+        // filter
         if (statusFilter !== 'all') {
             tasks = tasks.filter(t => statusFilter === 'completed' ? t.completed : !t.completed);
         }
@@ -123,7 +123,7 @@ const UI = {
             tasks = tasks.filter(t => t.category === catFilter);
         }
 
-        // Sort
+        // sort
         tasks.sort((a, b) => {
             if (sortBy === 'date') return new Date(a.dueDate) - new Date(b.dueDate);
             if (sortBy === 'priority') {
@@ -133,7 +133,7 @@ const UI = {
             return 0;
         });
 
-        // Render
+        // render
         list.innerHTML = tasks.map(task => `
             <div class="task-card priority-${task.priority} ${task.completed ? 'completed' : ''}" data-id="${task.id}">
                 <div class="task-header">
@@ -157,11 +157,10 @@ const UI = {
 
         if (tasks.length === 0) list.innerHTML = '<p class="empty-state">No tasks found.</p>';
 
-        // Populate category filter if needed (could be optimized)
+        // populate category filter if needed
         const categories = [...new Set(AppState.tasks.map(t => t.category).filter(Boolean))];
         const catSelect = document.getElementById('filter-category');
-        // Simple check to keep selected value or just update options
-        if (catSelect && catSelect.children.length <= 1) { // Only 'All' exists
+        if (catSelect && catSelect.children.length <= 1) { // only 'All' exists
             categories.forEach(c => {
                 const opt = document.createElement('option');
                 opt.value = c;
@@ -175,12 +174,10 @@ const UI = {
         const stats = AppState.getDashboardStats();
         const todayTasks = AppState.getTasksDueSoon();
         const dashContainer = document.querySelector('#dashboard .grid-container');
-        // Note: I need to update index.html to match this selector or update this selector
-        // In previous tools I wrote index.html with <div class="grid-container"> inside #dashboard.
 
         if (!dashContainer) return;
 
-        // Stats HTML
+        // stats html
         const statsHTML = `
             <div class="card stat-card">
               <h3>Target</h3>
@@ -203,7 +200,7 @@ const UI = {
             </div>
         `;
 
-        // Tasks HTML
+        // tasks html
         let taskListHTML = '<div class="dashboard-section" style="grid-column: 1 / -1;"><h2>🚀 Priority Focus</h2>';
         if (todayTasks.length === 0) {
             taskListHTML += '<p class="empty-state">No urgent tasks!</p>';

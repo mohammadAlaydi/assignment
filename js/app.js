@@ -1,12 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Boot up
+    // boot up
     AppState.init();
     UI.applyTheme(AppState.settings.theme);
 
-    // Default view
+    // default view
     UI.switchTab('dashboard');
 
-    // Nav handling
+    // nav handling
     document.querySelector('.nav-links').addEventListener('click', (e) => {
         if (e.target.matches('.nav-btn')) {
             e.preventDefault();
@@ -15,9 +15,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // TASK SECTION LOGIC
+    // task section logic
 
-    // Toggle Form
+    // toggle form
     const formBtn = document.getElementById('show-task-form-btn');
     const cancelBtn = document.getElementById('cancel-task-btn');
     const formContainer = document.getElementById('task-form-container');
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Add/Edit Task
+    // add or edit task
     if (taskForm) {
         taskForm.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -71,13 +71,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Filters
+    // filters
     ['filter-status', 'filter-category', 'sort-by'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.addEventListener('change', () => UI.renderTasks());
     });
 
-    // HABITS SECTION LOGIC
+    // habits section logic
     const habitFormBtn = document.getElementById('show-habit-form-btn');
     const cancelHabitBtn = document.getElementById('cancel-habit-btn');
     const habitFormContainer = document.getElementById('habit-form-container');
@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Global App handlers for inline onclicks
+// global app handlers for inline onclicks
 window.app = {
     toggleTask(id) {
         const task = AppState.tasks.find(t => t.id == id);
@@ -124,7 +124,7 @@ window.app = {
         }
     },
     deleteTask(id) {
-        AppState.deleteTask(id); // Handles confirm internally
+        AppState.deleteTask(id); // handles confirm internally
         UI.renderTasks();
     },
     editTask(id) {
@@ -139,8 +139,8 @@ window.app = {
 
             document.getElementById('task-form-container').classList.remove('hidden');
             document.getElementById('show-task-form-btn').classList.add('hidden');
-            // Check if section visible, otherwise switch tab?
-            // Usually we are already on the tab.
+            // check if section visible, otherwise switch tab?
+            // usually we are already on the tab.
             UI.switchTab('tasks');
             const tasksSection = document.getElementById('tasks');
             if (tasksSection) window.scrollTo(0, tasksSection.offsetTop);
@@ -160,17 +160,18 @@ window.app = {
     }
 };
 
-// Initialize Resources logic
+// initialize resources logic
 document.addEventListener('DOMContentLoaded', async () => {
     await AppState.loadResources();
 
-    // Resource Filters
+    // resource filters
     const searchInput = document.getElementById('resource-search');
     const catFilter = document.getElementById('resource-filter');
 
+    if (searchInput) searchInput.addEventListener('input', () => UI.renderResources());
     if (catFilter) catFilter.addEventListener('change', () => UI.renderResources());
 
-    // SETTINGS LOGIC
+    // settings logic
     const themeBtn = document.getElementById('theme-toggle');
     const resetBtn = document.getElementById('reset-data-btn');
 
