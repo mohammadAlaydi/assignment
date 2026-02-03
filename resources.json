@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "title": "MDN Web Docs",
+    "category": "Development",
+    "link": "https://developer.mozilla.org",
+    "description": "Resources for developers, by developers."
+  },
+  {
+    "id": 2,
+    "title": "Khan Academy",
+    "category": "General",
+    "link": "https://khanacademy.org",
+    "description": "Free world-class education for anyone, anywhere."
+  },
+  {
+    "id": 3,
+    "title": "CSS Tricks",
+    "category": "Design",
+    "link": "https://css-tricks.com",
+    "description": "A wealth of CSS knowledge."
+  }
+]

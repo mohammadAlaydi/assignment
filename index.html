@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyBuddy</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+</head>
+
+<body class="">
+    <div class="app-shell">
+        <header class="app-header">
+            <div class="logo"><strong>StudyBuddy</strong></div>
+            <nav class="nav-links">
+                <button data-target="dashboard" class="nav-btn active">Dashboard</button>
+                <button data-target="tasks" class="nav-btn">Tasks</button>
+                <button data-target="habits" class="nav-btn">Habits</button>
+                <button data-target="resources" class="nav-btn">Resources</button>
+                <button data-target="settings" class="nav-btn">Settings</button>
+            </nav>
+        </header>
+
+        <main>
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="view">
+                <h1>Dashboard</h1>
+                <div class="grid-container">
+                    <!-- Summary Cards will go here -->
+                    <div class="card" style="padding: 1rem; background: var(--card-bg); border-radius: 8px;">
+                        <h3>Welcome</h3>
+                        <p>Your study overview.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tasks Section -->
+            <section id="tasks" class="view hidden">
+                <div class="section-header">
+                    <h1>Tasks</h1>
+                    <button id="show-task-form-btn" class="btn btn-primary">+ New Task</button>
+                </div>
+
+                <!-- Task Form (Hidden by default) -->
+                <div id="task-form-container" class="hidden card" style="margin-bottom: 1.5rem;">
+                    <form id="task-form">
+                        <input type="hidden" id="task-id">
+                        <div class="form-group">
+                            <label for="task-title">Title *</label>
+                            <input type="text" id="task-title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="task-desc">Description</label>
+                            <textarea id="task-desc"></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="task-date">Due Date *</label>
+                                <input type="date" id="task-date" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="task-priority">Priority</label>
+                                <select id="task-priority">
+                                    <option value="Low">Low</option>
+                                    <option value="Medium" selected>Medium</option>
+                                    <option value="High">High</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="task-category">Category</label>
+                                <input type="text" id="task-category" placeholder="e.g. Math">
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" id="cancel-task-btn" class="btn">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save Task</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Controls -->
+                <div class="controls-bar card">
+                    <div class="filter-group">
+                        <label>Filter:</label>
+                        <select id="filter-status">
+                            <option value="all">All</option>
+                            <option value="active">Active</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                        <select id="filter-category">
+                            <option value="all">All Categories</option>
+                        </select>
+                    </div>
+                    <div class="sort-group">
+                        <label>Sort:</label>
+                        <select id="sort-by">
+                            <option value="date">Due Date</option>
+                            <option value="priority">Priority</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Task List -->
+                <div id="task-list" class="grid-container"></div>
+            </section>
+
+            <!-- Habits Section -->
+            <section id="habits" class="view hidden">
+                <div class="section-header">
+                    <h1>Habits</h1>
+                    <button id="show-habit-form-btn" class="btn btn-primary">+ New Habit</button>
+                </div>
+
+                <div id="habit-form-container" class="hidden card" style="margin-bottom: 1.5rem;">
+                    <form id="habit-form">
+                        <div class="form-group">
+                            <label for="habit-title">Habit Name *</label>
+                            <input type="text" id="habit-title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="habit-goal">Weekly Goal (Days) *</label>
+                            <input type="number" id="habit-goal" min="1" max="7" value="7" required>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" id="cancel-habit-btn" class="btn">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Start Habit</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="habits-list" class="grid-container"></div>
+            </section>
+
+            <!-- Resources Section -->
+            <section id="resources" class="view hidden">
+                <h1>Resources</h1>
+                <!-- Resources list -->
+            </section>
+
+            <!-- Settings Section -->
+            <section id="settings" class="view hidden">
+                <h1>Settings</h1>
+                <div class="grid-container">
+                    <div class="card">
+                        <h3>Appearance</h3>
+                        <p>Customize your experience.</p>
+                        <button id="theme-toggle" class="btn btn-primary" style="margin-top: 1rem;">Switch
+                            Theme</button>
+                    </div>
+
+                    <div class="card">
+                        <h3>Data Management</h3>
+                        <p>Clear all local data and start fresh.</p>
+                        <button id="reset-data-btn" class="btn btn-danger" style="margin-top: 1rem;">Reset All
+                            Data</button>
+                    </div>
+
+                    <div class="card" style="grid-column: 1 / -1;">
+                        <h3>About StudyBuddy</h3>
+                        <p>Version 1.0.0</p>
+                        <p>A simple SPA for managing your student life.</p>
+                        <p style="margin-top: 0.5rem; color: #6b7280;">Created by Student Name</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/storage.js"></script>
+    <script src="js/state.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>
