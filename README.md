@@ -1,6 +1,8 @@
+mohammad alaydi 120231441 assignment 1
+
 # StudyBuddy SPA
 
-A Mobile-First Single Page Application (SPA) designed to help students manage their tasks, habits, and learning resources. Built with Vanilla JavaScript, HTML, and CSS (No Frameworks).
+A Mobile-First Single Page Application (SPA) designed to help students manage their tasks, habits, and learning resources. Built with Vanilla JavaScript ,HTML, and CSS
 
 ## Features
 
@@ -33,7 +35,6 @@ A Mobile-First Single Page Application (SPA) designed to help students manage th
 
 1.  Download or Clone the repository.
 2.  Open `index.html` in any modern web browser.
-3.  Enjoy! No build step or server required.
 
 ## Technical Details
 
@@ -41,6 +42,5 @@ A Mobile-First Single Page Application (SPA) designed to help students manage th
 - **Persistence**: `localStorage` used for all user data.
 - **Styling**: Vanilla CSS with Variables and Flexbox/Grid.
 - **Routing**: Client-side view switching (hidden sections).
+https://github.com/mohammadAlaydi/assignment.git
 
-## Screenshots
-*(Insert screenshots here)*

@@ -1,8 +1,8 @@
 const AppState = {
     tasks: [],
     habits: [],
-    resources: [], // metadata for resources
-    favorites: [], // ids of favorite resources
+    resources: [],
+    favorites: [],
     settings: {
         theme: 'light'
     },
@@ -59,7 +59,7 @@ const AppState = {
     },
 
     deleteTask(id) {
-        // confirmation is handled in ui or app before calling this
+
         if (confirm('Are you sure you want to delete this task?')) {
             this.tasks = this.tasks.filter(t => t.id != id);
             this.save();
@@ -69,7 +69,7 @@ const AppState = {
     // habit methods
     addHabit(habit) {
         habit.id = Date.now();
-        // init progress for 7 days
+
         habit.progress = Array(7).fill(false);
         this.habits.push(habit);
         this.save();
@@ -95,7 +95,7 @@ const AppState = {
         const completed = this.tasks.filter(t => t.completed).length;
         const progress = total === 0 ? 0 : Math.round((completed / total) * 100);
 
-        // simple habit streak: count total "true" in all habit progress arrays
+
         let weeklyHabits = 0;
         this.habits.forEach(h => {
             if (h.progress && Array.isArray(h.progress)) {
@@ -116,11 +116,11 @@ const AppState = {
         today.setHours(0, 0, 0, 0);
 
         const limit = new Date(today);
-        limit.setDate(limit.getDate() + 2); // today + 2 days
+        limit.setDate(limit.getDate() + 2);
 
         return this.tasks.filter(t => {
             if (t.completed) return false;
-            // handle string dates (input type="date" is YYYY-MM-DD)
+
             const d = new Date(t.dueDate);
             d.setHours(0, 0, 0, 0);
             return d >= today && d <= limit;
